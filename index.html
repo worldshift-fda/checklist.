@@ -1419,14 +1419,24 @@ max-width: 220px;
 
 
 <div id="screen-eye-cos" class="screen">
-<h2>目元化粧品に該当しますか？</h2>
-<div class="btn-group">
-<button class="btn btn-yes" onclick="selectEyeCosmetic(true, this)">はい</button>
-<button class="btn btn-no" onclick="selectEyeCosmetic(false, this)">いいえ</button>
-</div>
-<div class="back-row">
-<button class="back-btn" onclick="goBackFromEyeCos()">ひとつ前の質問に戻る</button>
-</div>
+  <h2>以下に該当しますか？</h2>
+
+  <div class="question-desc">
+    <ul>
+      <li>目の粘膜に触れるもの（マスカラ、アイライナーなど）</li>
+      <li>体内に入れるもの、注射するもの</li>
+      <li>24時間以上消えない・残るもの（ジェルネイル、まつげ染料など）</li>
+    </ul>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-yes" onclick="selectEyeCosmetic(true, this)">はい</button>
+    <button class="btn btn-no" onclick="selectEyeCosmetic(false, this)">いいえ</button>
+  </div>
+
+  <div class="back-row">
+    <button class="back-btn" onclick="goBackFromEyeCos()">ひとつ前の質問に戻る</button>
+  </div>
 </div>
 
 
@@ -2565,7 +2575,6 @@ document.getElementById("print-trigger").addEventListener("click", generatePDF);
 </script>
 </body>
 </html>
-
 
 
 
