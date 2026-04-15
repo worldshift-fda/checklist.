@@ -1398,7 +1398,7 @@ max-width: 220px;
 <h3>事前確認が必要です</h3>
 <p>
 治療・改善・予防効果や医療的な効能表現がある商材は、アメリカで医薬品等に該当する可能性があります。<br>
-そのため、まずは個別確認をおすすめします。
+そのため、通常の化粧品フローでは進めず、まずは個別確認をおすすめします。
 </p>
 <div class="cta-actions">
 <a class="cta-link inquiry-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSfKvrOoKesNQIHIqQLMiSXB6ueetyhGlDiZ2-S0dbsvEmwKEA/viewform?usp=header" target="_blank" rel="noopener">
@@ -1418,37 +1418,15 @@ max-width: 220px;
 </div>
 
 
-<div id="screen-eye-cos" class="screen" style="text-align: center;">
-
-  <h2>以下に該当しますか？</h2>
-
-  <div class="question-desc" style="display: inline-block; text-align: left;">
-    <ul>
-      <li>目の粘膜に触れるもの（マスカラ、アイライナーなど）</li>
-      <li>体内に入れるもの、注射するもの</li>
-      <li>24時間以上消えない・残るもの（ジェルネイル、まつげ染料など）</li>
-    </ul>
-  </div>
-
-  <div class="btn-group" style="margin-top: 20px;">
-    <button class="btn btn-yes" onclick="selectEyeCosmetic(true, this)">はい</button>
-    <button class="btn btn-no" onclick="selectEyeCosmetic(false, this)">いいえ</button>
-  </div>
-
-  <div class="back-row" style="margin-top: 20px;">
-    <button class="back-btn" onclick="goBackFromEyeCos()">ひとつ前の質問に戻る</button>
-  </div>
-
+<div id="screen-eye-cos" class="screen">
+<h2>目元化粧品に該当しますか？</h2>
+<div class="btn-group">
+<button class="btn btn-yes" onclick="selectEyeCosmetic(true, this)">はい</button>
+<button class="btn btn-no" onclick="selectEyeCosmetic(false, this)">いいえ</button>
 </div>
-
-  <div class="btn-group">
-    <button class="btn btn-yes" onclick="selectEyeCosmetic(true, this)">はい</button>
-    <button class="btn btn-no" onclick="selectEyeCosmetic(false, this)">いいえ</button>
-  </div>
-
-  <div class="back-row">
-    <button class="back-btn" onclick="goBackFromEyeCos()">ひとつ前の質問に戻る</button>
-  </div>
+<div class="back-row">
+<button class="back-btn" onclick="goBackFromEyeCos()">ひとつ前の質問に戻る</button>
+</div>
 </div>
 
 
@@ -2587,6 +2565,8 @@ document.getElementById("print-trigger").addEventListener("click", generatePDF);
 </script>
 </body>
 </html>
+
+
 
 
 
