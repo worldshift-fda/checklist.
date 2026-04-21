@@ -4,6 +4,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -2622,12 +2623,11 @@ document.getElementById("print-trigger").addEventListener("click", generatePDF);
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('[data-cta]').forEach(function (el) {
     el.addEventListener('click', function () {
-      if (typeof gtag === 'function') {
-        gtag('event', 'cta_click', {
-          cta_name: el.dataset.cta,
-          cta_text: el.innerText.trim()
-        });
-      }
+      const eventName = 'fda_checklist_' + el.dataset.cta + '_click';
+
+      gtag('event', eventName, {
+        cta_text: el.innerText.trim()
+      });
     });
   });
 });
