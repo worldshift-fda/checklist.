@@ -5,6 +5,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -1576,7 +1578,7 @@ max-width: 220px;
 <button class="btn print-btn" id="print-trigger" data-cta="download_pdf">結果をPDFとして保存・印刷する</button>
 </div>
 <div class="restart-link-wrap">
-<button class="restart-link-btn" id="restart-trigger" onclick="restartChecklist()" data-cta="restart">最初からやり直す</button>
+<button class="restart-link-btn" id="restart-trigger" data-cta="restart">最初からやり直す</button>
 </div>
 </div>
 </div>
@@ -2615,19 +2617,75 @@ window.addEventListener("resize", () => {
 updateHeight();
 });
 
-
-document.getElementById("print-trigger").addEventListener("click", generatePDF);
 </script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('[data-cta]').forEach(function (el) {
-    el.addEventListener('click', function () {
-      const eventName = 'fda_checklist_' + el.dataset.cta + '_click';
+  function runAfterEvent(target, callback) {
+    if (typeof callback !== 'function') return;
 
+    let done = false;
+    function once() {
+      if (done) return;
+      done = true;
+      callback();
+    }
+
+    if (typeof gtag === 'function' && target && target.dataset && target.dataset.cta) {
+      const eventName = 'fda_checklist_' + target.dataset.cta + '_click';
       gtag('event', eventName, {
-        cta_text: el.innerText.trim()
+        cta_text: (target.innerText || '').trim(),
+        event_callback: once
       });
+      setTimeout(once, 800);
+    } else {
+      once();
+    }
+  }
+
+  document.querySelectorAll('[data-cta]').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      const isAnchor = el.tagName === 'A' && el.href;
+      const isPrint = el.id === 'print-trigger';
+      const isRestart = el.id === 'restart-trigger';
+
+      if (isAnchor || isPrint || isRestart) {
+        e.preventDefault();
+      }
+
+      if (isPrint) {
+        runAfterEvent(el, function () {
+          generatePDF();
+        });
+        return;
+      }
+
+      if (isRestart) {
+        runAfterEvent(el, function () {
+          restartChecklist();
+        });
+        return;
+      }
+
+      if (isAnchor) {
+        const href = el.href;
+        const target = el.getAttribute('target');
+        runAfterEvent(el, function () {
+          if (target === '_blank') {
+            window.open(href, '_blank', 'noopener');
+          } else {
+            window.location.href = href;
+          }
+        });
+        return;
+      }
+
+      if (typeof gtag === 'function') {
+        const eventName = 'fda_checklist_' + el.dataset.cta + '_click';
+        gtag('event', eventName, {
+          cta_text: (el.innerText || '').trim()
+        });
+      }
     });
   });
 });
