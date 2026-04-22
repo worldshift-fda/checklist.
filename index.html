@@ -2643,50 +2643,51 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  document.querySelectorAll('[data-cta]').forEach(function (el) {
-    el.addEventListener('click', function (e) {
-      const isAnchor = el.tagName === 'A' && el.href;
-      const isPrint = el.id === 'print-trigger';
-      const isRestart = el.id === 'restart-trigger';
+  document.addEventListener('click', function (e) {
+    const el = e.target.closest('[data-cta]');
+    if (!el) return;
 
-      if (isAnchor || isPrint || isRestart) {
-        e.preventDefault();
-      }
+    const isAnchor = el.tagName === 'A' && el.href;
+    const isPrint = el.id === 'print-trigger';
+    const isRestart = el.id === 'restart-trigger';
 
-      if (isPrint) {
-        runAfterEvent(el, function () {
-          generatePDF();
-        });
-        return;
-      }
+    if (isAnchor || isPrint || isRestart) {
+      e.preventDefault();
+    }
 
-      if (isRestart) {
-        runAfterEvent(el, function () {
-          restartChecklist();
-        });
-        return;
-      }
+    if (isPrint) {
+      runAfterEvent(el, function () {
+        generatePDF();
+      });
+      return;
+    }
 
-      if (isAnchor) {
-        const href = el.href;
-        const target = el.getAttribute('target');
-        runAfterEvent(el, function () {
-          if (target === '_blank') {
-            window.open(href, '_blank', 'noopener');
-          } else {
-            window.location.href = href;
-          }
-        });
-        return;
-      }
+    if (isRestart) {
+      runAfterEvent(el, function () {
+        restartChecklist();
+      });
+      return;
+    }
 
-      if (typeof gtag === 'function') {
-        const eventName = 'fda_checklist_' + el.dataset.cta + '_click';
-        gtag('event', eventName, {
-          cta_text: (el.innerText || '').trim()
-        });
-      }
-    });
+    if (isAnchor) {
+      const href = el.href;
+      const target = el.getAttribute('target');
+      runAfterEvent(el, function () {
+        if (target === '_blank') {
+          window.open(href, '_blank', 'noopener');
+        } else {
+          window.location.href = href;
+        }
+      });
+      return;
+    }
+
+    if (typeof gtag === 'function') {
+      const eventName = 'fda_checklist_' + el.dataset.cta + '_click';
+      gtag('event', eventName, {
+        cta_text: (el.innerText || '').trim()
+      });
+    }
   });
 });
 </script>
