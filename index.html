@@ -2619,18 +2619,17 @@ document.getElementById("print-trigger").addEventListener("click", generatePDF);
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('[data-cta]').forEach(function (el) {
-    el.addEventListener('click', function () {
-      if (typeof gtag === 'function') {
-        const eventName = 'fda_checklist_' + el.dataset.cta + '_click';
+document.addEventListener('click', function (e) {
+  const el = e.target.closest('[data-cta]');
+  if (!el) return;
 
-        gtag('event', eventName, {
-          cta_text: (el.innerText || '').trim()
-        });
-      }
+  const eventName = 'fda_checklist_' + el.dataset.cta + '_click';
+
+  if (typeof gtag === 'function') {
+    gtag('event', eventName, {
+      cta_text: (el.innerText || '').trim()
     });
-  });
+  }
 });
 </script>
 </body>
